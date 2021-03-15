@@ -1,41 +1,23 @@
 package com.github.drivingtest.server.web.rest;
 
-import com.github.drivingtest.server.parser.CsvReader;
-import com.github.drivingtest.server.parser.TaskSpecialist;
+import com.github.drivingtest.server.dto.GeneratedExam;
+import com.github.drivingtest.server.service.ExamService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class TestController {
-    private final CsvReader csvReader;
 
+    private final ExamService examService;
 
-    public TestController(CsvReader csvReader) {
-        this.csvReader = csvReader;
+    public TestController(ExamService examService) {
+        this.examService = examService;
     }
-    @RequestMapping("index")
-    public ResponseEntity<List<TaskSpecialist>> index(){
-        HashSet<String> hashSet = new HashSet<>();
 
-
-    //    List<String[]> categories = csvReader.getTaskSpecialistList().stream().map(TaskSpecialist::getCategories).collect(Collectors.toList());
-        csvReader.getTaskSpecialistList().forEach(e -> {
-            List<String> cats = e.getCategories();
-            hashSet.addAll(cats);
-        });
-
-
-        System.out.println(hashSet);
-
-
-        return new ResponseEntity<>(csvReader.getTaskSpecialistList(), HttpStatus.OK);
+    @PostMapping("exam")
+    public ResponseEntity<GeneratedExam> doExam() {
+        return new ResponseEntity<>(examService.doExam(), HttpStatus.OK);
     }
 }

@@ -63,12 +63,15 @@ public class DataLoader implements ApplicationRunner {
     }
 
     private void createSpecialistTasks() {
-        List<TaskSpecialist> specialistTaskList = csvReader.getTaskSpecialistList();
-        specialistTaskList.forEach(taskSpecialist -> {
+        List<TaskSpecialist> taskSpecialistList = csvReader.getTaskSpecialistList();
+        taskSpecialistList.forEach(taskSpecialist -> {
             SpecialistTask specialistTask = new SpecialistTask();
             specialistTask.setId(taskSpecialist.getTaskId());
-            specialistTask.setQuestion(specialistTask.getQuestion());
-            specialistTask.setCorrectAnswer(specialistTask.getCorrectAnswer());
+            specialistTask.setQuestion(taskSpecialist.getQuestion());
+            specialistTask.setAnswerA(taskSpecialist.getAnswerA());
+            specialistTask.setAnswerB(taskSpecialist.getAnswerB());
+            specialistTask.setAnswerC(taskSpecialist.getAnswerC());
+            specialistTask.setCorrectAnswer(taskSpecialist.getCorrectAnswer());
             specialistTask.setCategories(getCategoriesFromString(taskSpecialist.getCategories()));
             specialistTask.setFilename(taskSpecialist.getMediaName());
             specialistTask.setPoints(taskSpecialist.getPoints());

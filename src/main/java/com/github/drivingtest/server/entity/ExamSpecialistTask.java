@@ -1,12 +1,14 @@
 package com.github.drivingtest.server.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import lombok.Data;
 
+import javax.persistence.*;
+
+@Data
 @Entity(name = "ExamSpecialistTaskDetails")
 public class ExamSpecialistTask {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
 
     @OneToOne

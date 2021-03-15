@@ -2,7 +2,6 @@ package com.github.drivingtest.server.parser;
 
 import org.springframework.stereotype.Component;
 
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,9 +12,9 @@ import java.util.List;
 @Component
 public class CsvReader {
 
+    private final String PATH = "src/main/resources/baza-pytan.csv";
     private List<TaskSpecialist> taskSpecialistList;
     private List<TaskPrimary> taskPrimaryList;
-    private final String PATH = "src/main/resources/baza-pytan.csv";
 
     public CsvReader() {
         taskSpecialistList = new ArrayList<>();
