@@ -82,7 +82,6 @@ public class AuthServiceImpl implements AuthService {
 
         User persistedUser = userService.save(user);
 
-
         return UserMapper.userToResponse(persistedUser);
     }
 

@@ -5,9 +5,15 @@ import com.github.drivingtest.server.domain.entity.*;
 import com.github.drivingtest.server.domain.mapper.ExamMapper;
 import com.github.drivingtest.server.domain.mapper.TaskMapper;
 import com.github.drivingtest.server.domain.repository.*;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class ExamService {
@@ -30,7 +36,7 @@ public class ExamService {
         this.examMapper = examMapper;
     }
 
-    public ExamResponse doExam(CategoryEnum category) {
+    public ExamResponse startExam(CategoryEnum category) {
 
         List<PrimaryTask> primaryTaskList20 = get20PrimaryTasksByCategory(category);
         List<SpecialistTask> specialTaskList12 = get12SpecialistTasksByCategory(category);
@@ -52,10 +58,14 @@ public class ExamService {
     }
 
     private List<PrimaryTask> get20PrimaryTasksByCategory(CategoryEnum category){
-        return primaryTaskRepository.findPrimaryTasksByCategoriesCategory(category).subList(0, 20);
+        List<PrimaryTask> primaryTaskList = primaryTaskRepository.findPrimaryTasksByCategoriesCategory(category);
+        List<PrimaryTask> highPrimaryTaskList = primaryTaskList.stream().filter(primaryTask -> primaryTask.getPoints() == 3).collect(Collectors.toList()).subList(0, 10);
+        List<PrimaryTask> midPrimaryTaskList = primaryTaskList.stream().filter(primaryTask -> primaryTask.getPoints() == 2).collect(Collectors.toList()).subList(0, 6);
+        List<PrimaryTask> lowPrimaryTaskList = primaryTaskList.stream().filter(primaryTask -> primaryTask.getPoints() == 1).collect(Collectors.toList()).subList(0, 4);
+        return Stream.of(highPrimaryTaskList, midPrimaryTaskList, lowPrimaryTaskList).flatMap(Collection::stream).collect(Collectors.toList());
     }
 
     private List<SpecialistTask> get12SpecialistTasksByCategory(CategoryEnum category){
-        return specialistTaskRepository.findSpecialistTasksByCategoriesCategory(category).subList(0, 20);
+        return specialistTaskRepository.findSpecialistTasksByCategoriesCategory(category).subList(0, 12);
     }
 }
