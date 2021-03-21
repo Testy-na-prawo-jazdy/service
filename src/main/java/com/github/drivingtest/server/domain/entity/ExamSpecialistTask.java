@@ -1,4 +1,4 @@
-package com.github.drivingtest.server.entity;
+package com.github.drivingtest.server.domain.entity;
 
 import lombok.Data;
 

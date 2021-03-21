@@ -1,15 +1,15 @@
 package com.github.drivingtest.server.configuration;
 
-import com.github.drivingtest.server.entity.Category;
-import com.github.drivingtest.server.entity.CategoryEnum;
-import com.github.drivingtest.server.entity.PrimaryTask;
-import com.github.drivingtest.server.entity.SpecialistTask;
+import com.github.drivingtest.server.domain.entity.Category;
+import com.github.drivingtest.server.domain.entity.CategoryEnum;
+import com.github.drivingtest.server.domain.entity.PrimaryTask;
+import com.github.drivingtest.server.domain.entity.SpecialistTask;
+import com.github.drivingtest.server.domain.repository.CategoryRepository;
+import com.github.drivingtest.server.domain.repository.PrimaryTaskRepository;
+import com.github.drivingtest.server.domain.repository.SpecialistTaskRepository;
 import com.github.drivingtest.server.parser.CsvReader;
 import com.github.drivingtest.server.parser.TaskPrimary;
 import com.github.drivingtest.server.parser.TaskSpecialist;
-import com.github.drivingtest.server.repository.CategoryRepository;
-import com.github.drivingtest.server.repository.PrimaryTaskRepository;
-import com.github.drivingtest.server.repository.SpecialistTaskRepository;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;

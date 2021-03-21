@@ -1,6 +1,7 @@
 package com.github.drivingtest.server.web.rest;
 
-import com.github.drivingtest.server.dto.GeneratedExam;
+import com.github.drivingtest.server.domain.dto.ExamResponse;
+import com.github.drivingtest.server.domain.entity.CategoryEnum;
 import com.github.drivingtest.server.service.ExamService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class TestController {
     }
 
     @PostMapping("exam")
-    public ResponseEntity<GeneratedExam> doExam() {
-        return new ResponseEntity<>(examService.doExam(), HttpStatus.OK);
+    public ResponseEntity<ExamResponse> doExam() {
+        return new ResponseEntity<>(examService.doExam(CategoryEnum.A), HttpStatus.OK);
     }
 }
