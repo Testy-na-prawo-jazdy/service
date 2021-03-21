@@ -10,6 +10,8 @@ import com.github.drivingtest.server.domain.repository.SpecialistTaskRepository;
 import com.github.drivingtest.server.parser.CsvReader;
 import com.github.drivingtest.server.parser.TaskPrimary;
 import com.github.drivingtest.server.parser.TaskSpecialist;
+import com.github.drivingtest.server.security.domain.dto.request.RegisterRequest;
+import com.github.drivingtest.server.security.service.AuthService;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -25,12 +27,14 @@ public class DataLoader implements ApplicationRunner {
     private final CategoryRepository categoryRepository;
     private final PrimaryTaskRepository primaryTaskRepository;
     private final SpecialistTaskRepository specialistTaskRepository;
+    private final AuthService authService;
 
-    public DataLoader(CsvReader csvReader, CategoryRepository categoryRepository, PrimaryTaskRepository primaryTaskRepository, SpecialistTaskRepository specialistTaskRepository) {
+    public DataLoader(CsvReader csvReader, CategoryRepository categoryRepository, PrimaryTaskRepository primaryTaskRepository, SpecialistTaskRepository specialistTaskRepository, AuthService authService) {
         this.csvReader = csvReader;
         this.categoryRepository = categoryRepository;
         this.primaryTaskRepository = primaryTaskRepository;
         this.specialistTaskRepository = specialistTaskRepository;
+        this.authService = authService;
     }
 
     @Override
@@ -38,6 +42,7 @@ public class DataLoader implements ApplicationRunner {
         createCategories();
         createPrimaryTasks();
         createSpecialistTasks();
+        createDemoAccount();
     }
 
     private void createCategories() {
@@ -85,5 +90,13 @@ public class DataLoader implements ApplicationRunner {
             category.setCategory(CategoryEnum.valueOf(s));
             return category;
         }).collect(Collectors.toList());
+    }
+
+    private void createDemoAccount() {
+        RegisterRequest registerRequest = new RegisterRequest();
+        registerRequest.setUsername("DEMO");
+        registerRequest.setEmail("DEMO@LOCALHOST.COM");
+        registerRequest.setPassword("DEMO123");
+        authService.register(registerRequest);
     }
 }
