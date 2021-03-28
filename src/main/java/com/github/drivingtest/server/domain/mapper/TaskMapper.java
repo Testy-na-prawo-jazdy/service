@@ -30,5 +30,4 @@ public class TaskMapper {
         examSpecialistTask.setSpecialistTask(specialistTask);
         return examSpecialistTask;
     }
-
 }
