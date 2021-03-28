@@ -4,7 +4,8 @@
 - [x] Parsing the csv document
 - [x] Entity Relationship Diagram - basic models
 - [X] Spring Security with JWT authentication
-- [ ] Logic related to generating exams
+- [X] Logic related to generating exams
+- [ ] Learning mode
 - [ ] Statistics
 - [ ] Documentation
 - [ ] Deployment to Heroku
@@ -30,7 +31,9 @@ Response
 
 ### Endpointy
 
-#### Generowanie egzaminu (dla zalogowanych)
+### Dla zalogowanych
+
+#### Generowanie egzaminu
 ```
 POST /exam/start/{category}
 
@@ -101,6 +104,81 @@ Response
     ]
 }
 ```
+
+#### Wysyłanie odpowiedzi do egzaminu
+```
+POST /exam/finish/{id}
+
+Request
+{
+    "examId": 34,
+    "primaryTaskList": [
+        {
+            "id": 2,
+            "chosenAnswer": false
+        },
+        {...}
+    ],
+    "specialistTaskList": [
+        {
+            "id": 22,
+            "chosenAnswer": "C"
+        },
+        {...}
+    ]
+}
+
+Response
+{
+    "examId": 34,
+    "primaryTaskList": [
+        {
+            "id": 2,
+            "primaryTask": {
+                "id": 8284,
+                "question": "Czy w tej sytuacji masz obowiązek użyć sygnału dźwiękowego, aby skłonić rowerzystę do szybszej jazdy?",
+                "correctAnswer": false,
+                "filename": "265_1024x576.jpg",
+                "points": 3,
+                "categories": [
+                    {
+                        "category": "B"
+                    }
+                ]
+            },
+            "correct": true
+        },
+        {...}
+    ],
+    "specialistTaskList": [
+        {
+            "id": 22,
+            "specialistTask": {
+                "id": 7237,
+                "question": "Z jaką prędkością nie możesz poruszać się w strefie zamieszkania?",
+                "answerA": "10 km/h.",
+                "answerB": "15 km/h.",
+                "answerC": "25 km/h.",
+                "correctAnswer": "C",
+                "filename": "2A118.jpg",
+                "points": 3,
+                "categories": [
+                    {
+                        "category": "B"
+                    },
+                    {
+                        "category": "B1"
+                    }
+                ]
+            },
+            "correct": true
+        },
+        {...}
+    ]
+}
+```
+
+### Dla niezalogowanych
 
 #### Logowanie
 ```
