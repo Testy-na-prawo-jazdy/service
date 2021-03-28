@@ -1,5 +1,6 @@
-package com.github.drivingtest.server.domain.entity;
+package com.github.drivingtest.server.domain.entity.exam;
 
+import com.github.drivingtest.server.domain.entity.SpecialistTask;
 import lombok.Data;
 
 import javax.persistence.*;

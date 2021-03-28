@@ -1,7 +1,7 @@
 package com.github.drivingtest.server.domain.mapper;
 
-import com.github.drivingtest.server.domain.entity.ExamPrimaryTask;
-import com.github.drivingtest.server.domain.entity.ExamSpecialistTask;
+import com.github.drivingtest.server.domain.entity.exam.ExamPrimaryTask;
+import com.github.drivingtest.server.domain.entity.exam.ExamSpecialistTask;
 import com.github.drivingtest.server.domain.entity.PrimaryTask;
 import com.github.drivingtest.server.domain.entity.SpecialistTask;
 import org.springframework.stereotype.Component;

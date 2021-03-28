@@ -1,4 +1,4 @@
-package com.github.drivingtest.server.domain.entity;
+package com.github.drivingtest.server.domain.entity.exam;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
