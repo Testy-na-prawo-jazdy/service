@@ -1,6 +1,5 @@
 package com.github.drivingtest.server.security.web.rest;
 
-import com.github.drivingtest.server.security.configuration.jwt.SecurityService;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,12 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/test")
 public class ExampleController {
-
-    private final SecurityService securityService;
-
-    public ExampleController(SecurityService securityService) {
-        this.securityService = securityService;
-    }
 
     @GetMapping("/guest")
     String guest() {

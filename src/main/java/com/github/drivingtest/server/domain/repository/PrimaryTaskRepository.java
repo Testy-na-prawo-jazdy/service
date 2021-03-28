@@ -15,6 +15,6 @@ public interface PrimaryTaskRepository extends JpaRepository<PrimaryTask, Intege
     @Query(value = "select pt from PrimaryTask pt inner join pt.categories c where c.category = :#{#category} order by function('RAND')")
     List<PrimaryTask> findPrimaryTasksByCategoriesCategory(@Param("category") CategoryEnum category);
 
-    @Query(value = "select pt from PrimaryTask pt inner join pt.categories c where c.category = :#{#category} order by function('RAND')")
+    @Query(value = "select pt from PrimaryTask pt inner join pt.categories c where c.category =:#{#category} and pt.id not in (select lpt.primaryTask.id from LearnPrimaryTaskDetails lpt where lpt.user = :#{#user} and lpt.isCorrect = true) ")
     List<PrimaryTask> findUniquePrimaryTasksByCategoriesCategory(@Param("category") CategoryEnum category, @Param("user") User user);
 }
