@@ -66,7 +66,7 @@ public class ExamService {
         return examMapper.examToExamForm(persistedExam);
     }
 
-    private List<PrimaryTask> get20PrimaryTasksByCategory(CategoryEnum category){
+    private List<PrimaryTask> get20PrimaryTasksByCategory(CategoryEnum category) {
         List<PrimaryTask> primaryTaskList = primaryTaskRepository.findPrimaryTasksByCategoriesCategory(category);
         List<PrimaryTask> highPrimaryTaskList = primaryTaskList.stream().filter(primaryTask -> primaryTask.getPoints() == 3).collect(Collectors.toList()).subList(0, 10);
         List<PrimaryTask> midPrimaryTaskList = primaryTaskList.stream().filter(primaryTask -> primaryTask.getPoints() == 2).collect(Collectors.toList()).subList(0, 6);
@@ -74,7 +74,7 @@ public class ExamService {
         return Stream.of(highPrimaryTaskList, midPrimaryTaskList, lowPrimaryTaskList).flatMap(Collection::stream).collect(Collectors.toList());
     }
 
-    private List<SpecialistTask> get12SpecialistTasksByCategory(CategoryEnum category){
+    private List<SpecialistTask> get12SpecialistTasksByCategory(CategoryEnum category) {
         return specialistTaskRepository.findSpecialistTasksByCategoriesCategory(category).subList(0, 12);
     }
 
@@ -82,7 +82,7 @@ public class ExamService {
 
         Optional<Exam> optionalExam = examRepository.findById(id);
 
-        if(optionalExam.isPresent()) {
+        if (optionalExam.isPresent()) {
             Exam exam = optionalExam.get();
 
             List<ExamPrimaryTask> examPrimaryTasks = exam.getExamPrimaryTasks().stream().peek(examPrimaryTask -> examFormSubmit.getPrimaryTaskList().stream()

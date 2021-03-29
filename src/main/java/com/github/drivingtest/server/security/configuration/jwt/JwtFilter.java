@@ -40,7 +40,7 @@ public class JwtFilter extends GenericFilterBean {
 
         String header = request.getHeader(JwtProvider.AUTHORIZATION_HEADER);
 
-        if(Objects.isNull(header) || !header.startsWith(JwtProvider.TOKEN_PREFIX)) {
+        if (Objects.isNull(header) || !header.startsWith(JwtProvider.TOKEN_PREFIX)) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -49,7 +49,7 @@ public class JwtFilter extends GenericFilterBean {
             String token = header.replace(JwtProvider.TOKEN_PREFIX, "");
             Authentication authentication = getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-        } catch (JwtException ex){
+        } catch (JwtException ex) {
             // DEV JWT DEBUG
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.getOutputStream().write(new ErrorResponse(HttpStatus.UNAUTHORIZED, ex.getMessage()).toJson().getBytes());

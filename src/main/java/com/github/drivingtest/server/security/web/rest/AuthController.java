@@ -45,7 +45,8 @@ public class AuthController {
     }
 
     @PostMapping(PATH_POST_REFRESH_TOKEN)
-    public @ResponseBody TokenResponse tokenPostRefresh(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
+    public @ResponseBody
+    TokenResponse tokenPostRefresh(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
         return authService.refreshToken(refreshTokenRequest.getRefreshToken()).orElseThrow(InvalidRefreshTokenException::new);
     }
 
@@ -57,7 +58,8 @@ public class AuthController {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = PATH_GET_ME, method = RequestMethod.GET)
-    public @ResponseBody User tokenGetMe() {
+    public @ResponseBody
+    User tokenGetMe() {
         return authService.getLoggedUser();
     }
 }

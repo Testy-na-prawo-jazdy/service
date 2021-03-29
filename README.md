@@ -1,11 +1,12 @@
 # Testy na prawo jazdy
 
 ### Objectives
+
 - [x] Parsing the csv document
 - [x] Entity Relationship Diagram - basic models
 - [X] Spring Security with JWT authentication
 - [X] Logic related to generating exams
-- [ ] Learning mode
+- [X] Learning mode
 - [ ] Statistics
 - [ ] Documentation
 - [ ] Deployment to Heroku
@@ -13,6 +14,7 @@
 - [ ] Testing
 
 ### Demo account
+
 ```
 POST /auth/login
 
@@ -34,6 +36,7 @@ Response
 ### Dla zalogowanych
 
 #### Generowanie egzaminu
+
 ```
 POST /exam/start/{category}
 
@@ -106,6 +109,7 @@ Response
 ```
 
 #### Wysyłanie odpowiedzi do egzaminu
+
 ```
 POST /exam/finish/{id}
 
@@ -178,9 +182,115 @@ Response
 }
 ```
 
+#### Tryb nauki - generowanie pojedynczych pytań
+```
+
+POST /learn/primaryTask/start/{category}
+POST /learn/specialistTask/start/{category}
+
+Response 1
+{
+    "id": 99,
+    "question": "Czy w tej sytuacji masz obowiązek zatrzymać pojazd?",
+    "correctAnswer": true,
+    "filename": "AK_D05_06_org.wmv",
+    "points": 3,
+    "categories": [
+        {
+            "category": "A"
+        },
+        {
+            "category": "B"
+        },
+        {
+            "category": "C"
+        },
+        {
+            "category": "D"
+        },
+        {
+            "category": "T"
+        },
+        {
+            "category": "AM"
+        },
+        {
+            "category": "A1"
+        },
+        {
+            "category": "A2"
+        },
+        {
+            "category": "B1"
+        },
+        {
+            "category": "C1"
+        },
+        {
+            "category": "D1"
+        }
+    ]
+}
+
+Response 2
+{
+    "id": 1864,
+    "question": "Jakiej kategorii prawo jazdy jest wymagane, gdy chcesz kierować czterokołowcem innym niż lekki?",
+    "answerA": "B1.",
+    "answerB": "A.",
+    "answerC": "AM.",
+    "correctAnswer": "A",
+    "filename": "",
+    "points": 1,
+    "categories": [
+        {
+            "category": "B"
+        },
+        {
+            "category": "B1"
+        }
+    ]
+}
+```
+
+#### Tryb nauki - wysyłanie rozwiązania 
+```
+POST /learn/primaryTask/finish/{id}
+POST /learn/specialistTask/finish/{id}
+
+Request 1
+{
+    "id": 22,
+    "chosenAnswer": false
+}
+
+Request 2
+{
+    "id": 31,
+    "chosenAnswer": "B"
+}
+```
+
 ### Dla niezalogowanych
+```
+POST /auth/login
+
+Request
+{
+    "username": "foo",
+    "password": "bar"
+}
+
+Response
+{
+    "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmb28iLCJleHAiOjE2MTI2NTQ2Mzl9.BhwwnmeKkFVplC3iudqi7pATFxjpV9SEVMFqFa-09WEco4MvuD6MBPOKurFt8y8BpCvNSTr8sYRtxrxFEGS0Eg",
+    "refreshToken": "FCglofZA0u6PxqZ29mqiQUvjOslNSVZCnPAqrS1Scg76DWuSSPNyZh412LU8bcUe8dx2OuZpQXMhIM0Q3uhNbnWHVKApeej64YvOP32BZumgI6E9Pt2zqaGrPYL30sUu"
+}
+```
+
 
 #### Logowanie
+
 ```
 POST /auth/login
 
@@ -198,6 +308,7 @@ Response
 ```
 
 #### Rejestracja
+
 ```
 POST /auth/register
 
@@ -219,6 +330,7 @@ Response
 ```
 
 #### Odświeżanie tokena
+
 ```
 POST /auth/token/refresh
 
@@ -234,6 +346,7 @@ Response
 ```
 
 #### Wylogowywanie (usuwanie refresh tokena)
+
 ```
 POST /auth/logout
 
@@ -247,6 +360,7 @@ Response
 ```
 
 #### Whoami [do debugowania]
+
 ```
 GET /auth/me
 
@@ -273,10 +387,10 @@ Response
 }
 ```
 
-
 ### Przykładowa obsługa błędów
 
 #### Błędne dane logowania
+
 ```
 {
     "errorCode": 403,
@@ -286,6 +400,7 @@ Response
 ```
 
 #### Brak autoryzacji
+
 ```
 {
     "errorCode": "401",
@@ -295,6 +410,7 @@ Response
 ```
 
 #### Brak uprawnień
+
 ```
 {
     "errorCode": 403,
@@ -304,6 +420,7 @@ Response
 ```
 
 #### Użytkownik nie istnieje
+
 ```
 {
     "errorCode": "401",
@@ -313,6 +430,7 @@ Response
 ```
 
 #### Walidacja obiektów
+
 ```
 {
     "errorCode": 400,
@@ -327,6 +445,7 @@ Response
 ```
 
 #### Wygasły token i inne wyjątki JWT [do debugowania]
+
 ```
 {
     "errorCode": "400",
