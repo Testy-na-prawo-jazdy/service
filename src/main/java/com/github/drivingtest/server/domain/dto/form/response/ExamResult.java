@@ -1,7 +1,7 @@
 package com.github.drivingtest.server.domain.dto.form.response;
 
-import com.github.drivingtest.server.domain.entity.ExamPrimaryTask;
-import com.github.drivingtest.server.domain.entity.ExamSpecialistTask;
+import com.github.drivingtest.server.domain.entity.exam.ExamPrimaryTask;
+import com.github.drivingtest.server.domain.entity.exam.ExamSpecialistTask;
 import lombok.Builder;
 import lombok.Data;
 

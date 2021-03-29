@@ -1,13 +1,21 @@
 package com.github.drivingtest.server.service;
 
-import com.github.drivingtest.server.domain.dto.form.request.EFSPrimaryTask;
 import com.github.drivingtest.server.domain.dto.form.request.ExamFormSubmit;
 import com.github.drivingtest.server.domain.dto.form.response.ExamForm;
 import com.github.drivingtest.server.domain.dto.form.response.ExamResult;
-import com.github.drivingtest.server.domain.entity.*;
+import com.github.drivingtest.server.domain.entity.CategoryEnum;
+import com.github.drivingtest.server.domain.entity.PrimaryTask;
+import com.github.drivingtest.server.domain.entity.SpecialistTask;
+import com.github.drivingtest.server.domain.entity.exam.Exam;
+import com.github.drivingtest.server.domain.entity.exam.ExamPrimaryTask;
+import com.github.drivingtest.server.domain.entity.exam.ExamSpecialistTask;
 import com.github.drivingtest.server.domain.mapper.ExamMapper;
 import com.github.drivingtest.server.domain.mapper.TaskMapper;
-import com.github.drivingtest.server.domain.repository.*;
+import com.github.drivingtest.server.domain.repository.PrimaryTaskRepository;
+import com.github.drivingtest.server.domain.repository.SpecialistTaskRepository;
+import com.github.drivingtest.server.domain.repository.exam.ExamPrimaryTaskRepository;
+import com.github.drivingtest.server.domain.repository.exam.ExamRepository;
+import com.github.drivingtest.server.domain.repository.exam.ExamSpecialistTaskRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -58,7 +66,7 @@ public class ExamService {
         return examMapper.examToExamForm(persistedExam);
     }
 
-    private List<PrimaryTask> get20PrimaryTasksByCategory(CategoryEnum category){
+    private List<PrimaryTask> get20PrimaryTasksByCategory(CategoryEnum category) {
         List<PrimaryTask> primaryTaskList = primaryTaskRepository.findPrimaryTasksByCategoriesCategory(category);
         List<PrimaryTask> highPrimaryTaskList = primaryTaskList.stream().filter(primaryTask -> primaryTask.getPoints() == 3).collect(Collectors.toList()).subList(0, 10);
         List<PrimaryTask> midPrimaryTaskList = primaryTaskList.stream().filter(primaryTask -> primaryTask.getPoints() == 2).collect(Collectors.toList()).subList(0, 6);
@@ -66,7 +74,7 @@ public class ExamService {
         return Stream.of(highPrimaryTaskList, midPrimaryTaskList, lowPrimaryTaskList).flatMap(Collection::stream).collect(Collectors.toList());
     }
 
-    private List<SpecialistTask> get12SpecialistTasksByCategory(CategoryEnum category){
+    private List<SpecialistTask> get12SpecialistTasksByCategory(CategoryEnum category) {
         return specialistTaskRepository.findSpecialistTasksByCategoriesCategory(category).subList(0, 12);
     }
 
@@ -74,7 +82,7 @@ public class ExamService {
 
         Optional<Exam> optionalExam = examRepository.findById(id);
 
-        if(optionalExam.isPresent()) {
+        if (optionalExam.isPresent()) {
             Exam exam = optionalExam.get();
 
             List<ExamPrimaryTask> examPrimaryTasks = exam.getExamPrimaryTasks().stream().peek(examPrimaryTask -> examFormSubmit.getPrimaryTaskList().stream()
