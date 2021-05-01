@@ -9,7 +9,7 @@
 - [X] Learning mode
 - [ ] Statistics
 - [ ] Documentation
-- [ ] Deployment to Heroku
+- [X] Deployment to Heroku
 - [ ] Mobile application
 - [ ] Testing
 
