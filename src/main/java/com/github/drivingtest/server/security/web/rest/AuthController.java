@@ -50,7 +50,7 @@ public class AuthController {
         return authService.refreshToken(refreshTokenRequest.getRefreshToken()).orElseThrow(InvalidRefreshTokenException::new);
     }
 
-    @DeleteMapping(PATH_DELETE_LOGOUT)
+    @PostMapping(PATH_DELETE_LOGOUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void tokenDeleteLogout(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
         authService.logout(refreshTokenRequest.getRefreshToken());

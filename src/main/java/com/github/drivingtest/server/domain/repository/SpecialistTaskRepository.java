@@ -14,6 +14,6 @@ public interface SpecialistTaskRepository extends JpaRepository<SpecialistTask, 
     @Query(value = "select st from SpecialistTask st inner join st.categories c where c.category = :#{#category} order by function('RAND')")
     List<SpecialistTask> findSpecialistTasksByCategoriesCategory(CategoryEnum category);
 
-    @Query(value = "select st from SpecialistTask st inner join st.categories c where c.category =:#{#category} and st.id not in (select lpt.specialistTask.id from LearnSpecialistTaskDetails lpt where lpt.user = :#{#user} and lpt.isCorrect = true)")
+    @Query(value = "select st from SpecialistTask st inner join st.categories c where c.category =:#{#category} and st.id not in (select lpt.specialistTask.id from LearnSpecialistTaskDetails lpt where lpt.user = :#{#user} and lpt.isCorrect = true) order by function('RAND')")
     List<SpecialistTask> findUniqueSpecialistTasksByCategoriesCategory(CategoryEnum category, User user);
 }
