@@ -8,6 +8,7 @@
 - [X] Logic related to generating exams
 - [X] Learning mode
 - [ ] Statistics
+- [X] History
 - [ ] Documentation
 - [X] Deployment to Heroku
 - [ ] Mobile application
@@ -268,6 +269,108 @@ Request 2
 {
     "id": 31,
     "chosenAnswer": "B"
+}
+```
+
+#### Historia egzaminów
+```
+GET /exam/history
+
+Response
+[
+    {
+        "examId": 34,
+        "score": 0,
+        "category": "B",
+        "date": "2021-05-08T19:25:28.230+00:00"
+    }
+]
+```
+
+#### Wynik egzaminu
+```
+GET /exam/result/{id}
+
+Response
+{
+    "id": 34,
+    "examPrimaryTasks": [
+        {
+            "id": 2,
+            "primaryTask": {
+                "id": 1427,
+                "question": "Czy w przedstawionej sytuacji wolno Ci skręcić w lewo?",
+                "correctAnswer": false,
+                "filename": "IMG_1645d6org.jpg",
+                "points": 3,
+                "categories": [
+                    {
+                        "category": "A"
+                    },
+                    {
+                        "category": "B"
+                    },
+                    {
+                        "category": "C"
+                    },
+                    {
+                        "category": "D"
+                    },
+                    {
+                        "category": "T"
+                    },
+                    {
+                        "category": "AM"
+                    },
+                    {
+                        "category": "A1"
+                    },
+                    {
+                        "category": "A2"
+                    },
+                    {
+                        "category": "B1"
+                    },
+                    {
+                        "category": "C1"
+                    },
+                    {
+                        "category": "D1"
+                    }
+                ]
+            },
+            "correct": false
+        },
+        {...}
+    ],
+    "examSpecialistTasks": [
+        {
+            "id": 22,
+            "specialistTask": {
+                "id": 3723,
+                "question": "Który z wymienionych elementów stanowi obowiązkowe wyposażenie każdego samochodu osobowego?",
+                "answerA": "Trójkąt ostrzegawczy.",
+                "answerB": "Apteczka.",
+                "answerC": "Koło zapasowe.",
+                "correctAnswer": "A",
+                "filename": "",
+                "points": 3,
+                "categories": [
+                    {
+                        "category": "B"
+                    }
+                ]
+            },
+            "correct": false
+        }, 
+        {...}
+    ],
+    "user": {
+        "id": 1
+    },
+    "score": 0,
+    "category": "B",
+    "date": "2021-05-08T19:25:28.230+00:00"
 }
 ```
 
