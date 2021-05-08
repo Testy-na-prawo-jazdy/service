@@ -38,7 +38,7 @@ public class ExamController {
     }
 
     @GetMapping(PATH_GET_RESULT_EXAM)
-    public ResponseEntity<Exam> getExam(@PathVariable int id) {
+    public ResponseEntity<ExamResult> getExam(@PathVariable int id) {
         return new ResponseEntity<>(examService.getExam(id), HttpStatus.OK);
     }
 

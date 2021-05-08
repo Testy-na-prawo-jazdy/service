@@ -141,7 +141,7 @@ public class ExamService {
         return examRepository.findAllByUser(authService.getLoggedUser()).stream().map(examMapper::examToExamHistory).collect(Collectors.toList());
     }
 
-    public Exam getExam(int id) {
-        return examRepository.findById(id).orElseThrow(ExamNotFoundException::new);
+    public ExamResult getExam(int id) {
+        return examMapper.examToExamResult(examRepository.findById(id).orElseThrow(ExamNotFoundException::new));
     }
 }
