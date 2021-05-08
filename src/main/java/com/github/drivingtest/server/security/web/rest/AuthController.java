@@ -20,14 +20,12 @@ import javax.validation.Valid;
 public class AuthController {
 
     public static final String PATH_POST_LOGIN = "/auth/login";
-    public static final String PATH_POST_SIGN_UP = "/auth/register";
     public static final String PATH_POST_REFRESH_TOKEN = "/auth/token/refresh";
     public static final String PATH_DELETE_LOGOUT = "/auth/logout";
     private static final String PATH_GET_ME = "/auth/me";
 
     private final AuthService authService;
 
-    @Autowired
     public AuthController(AuthService authService) {
         this.authService = authService;
     }
@@ -36,12 +34,6 @@ public class AuthController {
     public ResponseEntity<LoginResponse> userPostLogin(@Valid @RequestBody LoginRequest loginRequest) {
         LoginResponse loginResponse = authService.login(loginRequest);
         return new ResponseEntity<>(loginResponse, HttpStatus.OK);
-    }
-
-    @PostMapping(PATH_POST_SIGN_UP)
-    public ResponseEntity<UserResponse> userPostRegister(@Valid @RequestBody RegisterRequest registerRequest) {
-        UserResponse userResponse = authService.register(registerRequest);
-        return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
     }
 
     @PostMapping(PATH_POST_REFRESH_TOKEN)

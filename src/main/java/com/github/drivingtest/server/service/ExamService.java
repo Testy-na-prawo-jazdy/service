@@ -75,7 +75,11 @@ public class ExamService {
     }
 
     private List<SpecialistTask> get12SpecialistTasksByCategory(CategoryEnum category) {
-        return specialistTaskRepository.findSpecialistTasksByCategoriesCategory(category).subList(0, 12);
+        List<SpecialistTask> specialistTaskList = specialistTaskRepository.findSpecialistTasksByCategoriesCategory(category);
+        List<SpecialistTask> highSpecialistTaskList = specialistTaskList.stream().filter(primaryTask -> primaryTask.getPoints() == 3).collect(Collectors.toList()).subList(0, 6);
+        List<SpecialistTask> midSpecialistTaskList = specialistTaskList.stream().filter(primaryTask -> primaryTask.getPoints() == 2).collect(Collectors.toList()).subList(0, 4);
+        List<SpecialistTask> lowSpecialistTaskList = specialistTaskList.stream().filter(primaryTask -> primaryTask.getPoints() == 1).collect(Collectors.toList()).subList(0, 2);
+        return Stream.of(highSpecialistTaskList, midSpecialistTaskList, lowSpecialistTaskList).flatMap(Collection::stream).collect(Collectors.toList());
     }
 
     public ExamResult finishExam(int id, ExamFormSubmit examFormSubmit) {
