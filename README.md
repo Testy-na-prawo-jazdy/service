@@ -387,6 +387,38 @@ Response
 }
 ```
 
+#### Zmiana hasła
+
+```
+GET /auth/changePassword
+
+Request
+{
+    "oldPassword": "DEMO123",
+    "newPassword": "DEMO123456"
+}
+
+Response
+200 - OK
+403 - FORBIDDEN
+```
+
+#### Zmiana email
+
+```
+GET /auth/changeEmail
+
+Request
+{
+    "password": "DEMO123",
+    "newEmail": "admin@localhost"
+}
+
+Response
+200 - OK
+403 - FORBIDDEN
+```
+
 ### Przykładowa obsługa błędów
 
 #### Błędne dane logowania

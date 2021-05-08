@@ -1,6 +1,8 @@
 package com.github.drivingtest.server.security.service.impl;
 
 import com.github.drivingtest.server.security.configuration.jwt.JwtProvider;
+import com.github.drivingtest.server.security.domain.dto.request.ChangeEmailRequest;
+import com.github.drivingtest.server.security.domain.dto.request.ChangePasswordRequest;
 import com.github.drivingtest.server.security.domain.dto.request.LoginRequest;
 import com.github.drivingtest.server.security.domain.dto.request.RegisterRequest;
 import com.github.drivingtest.server.security.domain.dto.response.LoginResponse;
@@ -100,5 +102,29 @@ public class AuthServiceImpl implements AuthService {
     public void logout(String refreshToken) {
         userRefreshTokenRepository.findByToken(refreshToken)
                 .ifPresent(userRefreshTokenRepository::delete);
+    }
+
+    @Override
+    public void changePassword(ChangePasswordRequest changePasswordRequest) {
+        User user = getLoggedUser();
+
+        if(passwordEncoder.matches(changePasswordRequest.getOldPassword(), user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(changePasswordRequest.getNewPassword()));
+            userService.save(user);
+        } else {
+            throw new WrongPasswordException();
+        }
+    }
+
+    @Override
+    public void changeEmail(ChangeEmailRequest changeEmailRequest) {
+        User user = getLoggedUser();
+
+        if(passwordEncoder.matches(changeEmailRequest.getPassword(), user.getPassword())) {
+            user.setEmail(passwordEncoder.encode(changeEmailRequest.getNewEmail()));
+            userService.save(user);
+        } else {
+            throw new WrongPasswordException();
+        }
     }
 }

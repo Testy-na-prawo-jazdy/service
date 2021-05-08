@@ -3,6 +3,7 @@ package com.github.drivingtest.server.security.configuration;
 import com.github.drivingtest.server.security.configuration.jwt.JwtFilter;
 import com.github.drivingtest.server.security.domain.dto.error.ErrorResponse;
 import com.github.drivingtest.server.security.web.rest.AuthController;
+import com.github.drivingtest.server.web.rest.UserController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable(); // DEV
         http.addFilterAfter(jwtFilter, BasicAuthenticationFilter.class);
         http.authorizeRequests()
-                .mvcMatchers(AuthController.PATH_POST_SIGN_UP).permitAll()
+                .mvcMatchers(UserController.PATH_POST_SIGN_UP).permitAll()
                 .mvcMatchers(AuthController.PATH_POST_REFRESH_TOKEN).permitAll()
                 .mvcMatchers(AuthController.PATH_POST_LOGIN).permitAll()
                 .mvcMatchers("/h2-console/**").permitAll() // DEV
