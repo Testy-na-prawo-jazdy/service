@@ -15,5 +15,7 @@ public class ExamPrimaryTask {
     @OneToOne
     PrimaryTask primaryTask;
 
+    String selectedAnswer;
+
     boolean isCorrect;
 }

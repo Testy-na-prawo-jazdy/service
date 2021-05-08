@@ -15,5 +15,7 @@ public class ExamSpecialistTask {
     @OneToOne
     SpecialistTask specialistTask;
 
+    String selectedAnswer;
+
     boolean isCorrect;
 }

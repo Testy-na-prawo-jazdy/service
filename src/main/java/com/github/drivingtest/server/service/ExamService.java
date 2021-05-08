@@ -102,13 +102,19 @@ public class ExamService {
             List<ExamPrimaryTask> examPrimaryTasks = exam.getExamPrimaryTasks().stream().peek(examPrimaryTask -> examFormSubmit.getPrimaryTaskList().stream()
                     .filter(efsPrimaryTask -> efsPrimaryTask.getId() == examPrimaryTask.getId())
                     .findFirst()
-                    .ifPresent(efsPrimaryTask -> examPrimaryTask.setCorrect(examPrimaryTask.getPrimaryTask().isCorrectAnswer() == efsPrimaryTask.isChosenAnswer()))).collect(Collectors.toList());
+                    .ifPresent(efsPrimaryTask -> {
+                        examPrimaryTask.setSelectedAnswer(String.valueOf(efsPrimaryTask.isChosenAnswer()));
+                        examPrimaryTask.setCorrect(examPrimaryTask.getPrimaryTask().isCorrectAnswer() == efsPrimaryTask.isChosenAnswer());
+                    })).collect(Collectors.toList());
             exam.setExamPrimaryTasks(examPrimaryTasks);
 
             List<ExamSpecialistTask> examSpecialistTasks = exam.getExamSpecialistTasks().stream().peek(examSpecialistTask -> examFormSubmit.getSpecialistTaskList().stream()
                     .filter(efsSpecialistTask -> efsSpecialistTask.getId() == examSpecialistTask.getId())
                     .findFirst()
-                    .ifPresent(efsSpecialistTask -> examSpecialistTask.setCorrect(examSpecialistTask.getSpecialistTask().getCorrectAnswer().equals(efsSpecialistTask.getChosenAnswer())))).collect(Collectors.toList());
+                    .ifPresent(efsSpecialistTask -> {
+                        examSpecialistTask.setSelectedAnswer(efsSpecialistTask.getChosenAnswer());
+                        examSpecialistTask.setCorrect(examSpecialistTask.getSpecialistTask().getCorrectAnswer().equals(efsSpecialistTask.getChosenAnswer()));
+                    })).collect(Collectors.toList());
             exam.setExamSpecialistTasks(examSpecialistTasks);
 
             exam.setScore(countPoints(exam));
