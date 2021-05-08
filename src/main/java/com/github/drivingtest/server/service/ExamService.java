@@ -3,6 +3,7 @@ package com.github.drivingtest.server.service;
 import com.github.drivingtest.server.domain.dto.form.request.ExamFormSubmit;
 import com.github.drivingtest.server.domain.dto.form.response.ExamForm;
 import com.github.drivingtest.server.domain.dto.form.response.ExamResult;
+import com.github.drivingtest.server.domain.dto.history.response.ExamHistory;
 import com.github.drivingtest.server.domain.entity.CategoryEnum;
 import com.github.drivingtest.server.domain.entity.PrimaryTask;
 import com.github.drivingtest.server.domain.entity.SpecialistTask;
@@ -16,9 +17,12 @@ import com.github.drivingtest.server.domain.repository.SpecialistTaskRepository;
 import com.github.drivingtest.server.domain.repository.exam.ExamPrimaryTaskRepository;
 import com.github.drivingtest.server.domain.repository.exam.ExamRepository;
 import com.github.drivingtest.server.domain.repository.exam.ExamSpecialistTaskRepository;
+import com.github.drivingtest.server.exception.ExamNotFoundException;
+import com.github.drivingtest.server.security.service.AuthService;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,8 +38,9 @@ public class ExamService {
     private final ExamSpecialistTaskRepository examSpecialistTaskRepository;
     private final TaskMapper taskMapper;
     private final ExamMapper examMapper;
+    private final AuthService authService;
 
-    public ExamService(PrimaryTaskRepository primaryTaskRepository, SpecialistTaskRepository specialistTaskRepository, ExamRepository examRepository, ExamPrimaryTaskRepository examPrimaryTaskRepository, ExamSpecialistTaskRepository examSpecialistTaskRepository, TaskMapper taskMapper, ExamMapper examMapper) {
+    public ExamService(PrimaryTaskRepository primaryTaskRepository, SpecialistTaskRepository specialistTaskRepository, ExamRepository examRepository, ExamPrimaryTaskRepository examPrimaryTaskRepository, ExamSpecialistTaskRepository examSpecialistTaskRepository, TaskMapper taskMapper, ExamMapper examMapper, AuthService authService) {
         this.primaryTaskRepository = primaryTaskRepository;
         this.specialistTaskRepository = specialistTaskRepository;
         this.examRepository = examRepository;
@@ -43,6 +48,7 @@ public class ExamService {
         this.examSpecialistTaskRepository = examSpecialistTaskRepository;
         this.taskMapper = taskMapper;
         this.examMapper = examMapper;
+        this.authService = authService;
     }
 
     public ExamForm startExam(CategoryEnum category) {
@@ -59,6 +65,10 @@ public class ExamService {
         Exam exam = Exam.builder()
                 .examPrimaryTasks(examPrimaryTasks)
                 .examSpecialistTasks(examSpecialistTasks)
+                .user(authService.getLoggedUser())
+                .category(category)
+                .date(new Date())
+                .score(0)
                 .build();
 
         Exam persistedExam = examRepository.save(exam);
@@ -101,11 +111,31 @@ public class ExamService {
                     .ifPresent(efsSpecialistTask -> examSpecialistTask.setCorrect(examSpecialistTask.getSpecialistTask().getCorrectAnswer().equals(efsSpecialistTask.getChosenAnswer())))).collect(Collectors.toList());
             exam.setExamSpecialistTasks(examSpecialistTasks);
 
+            exam.setScore(countPoints(exam));
+
             examRepository.save(exam);
 
             return examMapper.examToExamResult(exam);
         }
 
         return null;
+    }
+
+    int countPoints(Exam exam) {
+        List<ExamPrimaryTask> examPrimaryTasks = exam.getExamPrimaryTasks();
+        List<ExamSpecialistTask> examSpecialistTasks = exam.getExamSpecialistTasks();
+
+        int countPT = examPrimaryTasks.stream().filter(ExamPrimaryTask::isCorrect).map(examPrimaryTask -> examPrimaryTask.getPrimaryTask().getPoints()).reduce(0, Integer::sum);
+        int countST = examSpecialistTasks.stream().filter(ExamSpecialistTask::isCorrect).map(examPrimaryTask -> examPrimaryTask.getSpecialistTask().getPoints()).reduce(0, Integer::sum);
+
+        return countPT + countST;
+    }
+
+    public List<ExamHistory> getHistory() {
+        return examRepository.findAllByUser(authService.getLoggedUser()).stream().map(examMapper::examToExamHistory).collect(Collectors.toList());
+    }
+
+    public Exam getExam(int id) {
+        return examRepository.findById(id).orElseThrow(ExamNotFoundException::new);
     }
 }

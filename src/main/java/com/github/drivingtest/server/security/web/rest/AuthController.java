@@ -2,14 +2,11 @@ package com.github.drivingtest.server.security.web.rest;
 
 import com.github.drivingtest.server.security.domain.dto.request.LoginRequest;
 import com.github.drivingtest.server.security.domain.dto.request.RefreshTokenRequest;
-import com.github.drivingtest.server.security.domain.dto.request.RegisterRequest;
 import com.github.drivingtest.server.security.domain.dto.response.LoginResponse;
 import com.github.drivingtest.server.security.domain.dto.response.TokenResponse;
-import com.github.drivingtest.server.security.domain.dto.response.UserResponse;
 import com.github.drivingtest.server.security.domain.entity.User;
 import com.github.drivingtest.server.security.exception.InvalidRefreshTokenException;
 import com.github.drivingtest.server.security.service.AuthService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
