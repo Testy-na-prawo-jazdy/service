@@ -185,72 +185,84 @@ Response
 
 #### Tryb nauki - generowanie pojedynczych pytań
 ```
-
 POST /learn/primaryTask/start/{category}
 POST /learn/specialistTask/start/{category}
 
 Response 1
 {
-    "id": 99,
-    "question": "Czy w tej sytuacji masz obowiązek zatrzymać pojazd?",
-    "correctAnswer": true,
-    "filename": "AK_D05_06_org.wmv",
-    "points": 3,
-    "categories": [
-        {
-            "category": "A"
-        },
-        {
-            "category": "B"
-        },
-        {
-            "category": "C"
-        },
-        {
-            "category": "D"
-        },
-        {
-            "category": "T"
-        },
-        {
-            "category": "AM"
-        },
-        {
-            "category": "A1"
-        },
-        {
-            "category": "A2"
-        },
-        {
-            "category": "B1"
-        },
-        {
-            "category": "C1"
-        },
-        {
-            "category": "D1"
-        }
-    ]
+    "id": 2,
+    "primaryTask": {
+        "id": 2443,
+        "question": "Czy wolno Ci wjechać na przejazd kolejowy, jeżeli półzapory zostały całkowicie podniesione, a sygnał czerwony jeszcze nie został wyłączony?",
+        "correctAnswer": false,
+        "filename": "d19_2org.mp4",
+        "points": 3,
+        "categories": [
+            {
+                "category": "A"
+            },
+            {
+                "category": "B"
+            },
+            {
+                "category": "C"
+            },
+            {
+                "category": "D"
+            },
+            {
+                "category": "T"
+            },
+            {
+                "category": "AM"
+            },
+            {
+                "category": "A1"
+            },
+            {
+                "category": "A2"
+            },
+            {
+                "category": "B1"
+            },
+            {
+                "category": "C1"
+            },
+            {
+                "category": "D1"
+            }
+        ]
+    },
+    "user": {
+        "id": 1
+    },
+    "selectedAnswer": null,
+    "correct": false
 }
 
 Response 2
 {
-    "id": 1864,
-    "question": "Jakiej kategorii prawo jazdy jest wymagane, gdy chcesz kierować czterokołowcem innym niż lekki?",
-    "answerA": "B1.",
-    "answerB": "A.",
-    "answerC": "AM.",
-    "correctAnswer": "A",
-    "filename": "",
-    "points": 1,
-    "categories": [
-        {
-            "category": "B"
-        },
-        {
-            "category": "B1"
-        }
-    ]
+    "id": 1,
+    "specialistTask": {
+        "id": 10840,
+        "question": "W jaki sposób przewozisz dziecko o wzroście mniejszym niż 150 cm na przednim siedzeniu samochodu osobowego, który ma pięć miejsc siedzących?",
+        "answerA": " Na kolanach pasażera.",
+        "answerB": " W foteliku bezpieczeństwa lub innym urządzeniu przytrzymującym dziecko.",
+        "answerC": "W foteliku bezpieczeństwa tyłem do kierunku jazdy, jeżeli pojazd ma aktywną poduszkę powietrzną dla pasażera.",
+        "correctAnswer": "B",
+        "filename": "",
+        "points": 2,
+        "categories": [
+            {
+                "category": "B"
+            }
+        ]
+    },
+    "user": {
+        "id": 1
+    },
+    "selectedAnswer": null,
+    "correct": false
 }
 ```
 
@@ -261,14 +273,91 @@ POST /learn/specialistTask/finish/{id}
 
 Request 1
 {
-    "id": 22,
+    "id": 2,
     "chosenAnswer": false
+}
+
+Response 1
+{
+    "id": 2,
+    "primaryTask": {
+        "id": 2443,
+        "question": "Czy wolno Ci wjechać na przejazd kolejowy, jeżeli półzapory zostały całkowicie podniesione, a sygnał czerwony jeszcze nie został wyłączony?",
+        "correctAnswer": false,
+        "filename": "d19_2org.mp4",
+        "points": 3,
+        "categories": [
+            {
+                "category": "A"
+            },
+            {
+                "category": "B"
+            },
+            {
+                "category": "C"
+            },
+            {
+                "category": "D"
+            },
+            {
+                "category": "T"
+            },
+            {
+                "category": "AM"
+            },
+            {
+                "category": "A1"
+            },
+            {
+                "category": "A2"
+            },
+            {
+                "category": "B1"
+            },
+            {
+                "category": "C1"
+            },
+            {
+                "category": "D1"
+            }
+        ]
+    },
+    "user": {
+        "id": 1
+    },
+    "selectedAnswer": "false",
+    "correct": true
 }
 
 Request 2
 {
-    "id": 31,
+    "id": 1,
     "chosenAnswer": "B"
+}
+
+Response 2
+{
+    "id": 1,
+    "specialistTask": {
+        "id": 10840,
+        "question": "W jaki sposób przewozisz dziecko o wzroście mniejszym niż 150 cm na przednim siedzeniu samochodu osobowego, który ma pięć miejsc siedzących?",
+        "answerA": " Na kolanach pasażera.",
+        "answerB": " W foteliku bezpieczeństwa lub innym urządzeniu przytrzymującym dziecko.",
+        "answerC": "W foteliku bezpieczeństwa tyłem do kierunku jazdy, jeżeli pojazd ma aktywną poduszkę powietrzną dla pasażera.",
+        "correctAnswer": "B",
+        "filename": "",
+        "points": 2,
+        "categories": [
+            {
+                "category": "B"
+            }
+        ]
+    },
+    "user": {
+        "id": 1
+    },
+    "selectedAnswer": "B",
+    "correct": true
 }
 ```
 

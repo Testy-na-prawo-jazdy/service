@@ -5,7 +5,6 @@ import com.github.drivingtest.server.domain.dto.form.response.ExamForm;
 import com.github.drivingtest.server.domain.dto.form.response.ExamResult;
 import com.github.drivingtest.server.domain.dto.history.response.ExamHistory;
 import com.github.drivingtest.server.domain.entity.CategoryEnum;
-import com.github.drivingtest.server.domain.entity.exam.Exam;
 import com.github.drivingtest.server.service.ExamService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

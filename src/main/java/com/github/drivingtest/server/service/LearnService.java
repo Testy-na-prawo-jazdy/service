@@ -50,7 +50,7 @@ public class LearnService {
         return specialistTaskRepository.findSpecialistTasksByCategoriesCategory(category).subList(0, 1).get(0);
     }
 
-    public PrimaryTask getUniquePrimaryTask(CategoryEnum category) {
+    public LearnPrimaryTask getUniquePrimaryTask(CategoryEnum category) {
         User user = authService.getLoggedUser();
         PrimaryTask primaryTask = primaryTaskRepository.findUniquePrimaryTasksByCategoriesCategory(category, user).get(0);
 
@@ -70,10 +70,10 @@ public class LearnService {
 
         learnPrimaryTaskRepository.save(learnPrimaryTask);
 
-        return primaryTask;
+        return learnPrimaryTask;
     }
 
-    public SpecialistTask getUniqueSpecialistTask(CategoryEnum category) {
+    public LearnSpecialistTask getUniqueSpecialistTask(CategoryEnum category) {
         User user = authService.getLoggedUser();
         SpecialistTask specialistTask = specialistTaskRepository.findUniqueSpecialistTasksByCategoriesCategory(category, user).get(0);
 
@@ -93,7 +93,7 @@ public class LearnService {
 
         learnSpecialistTaskRepository.save(learnSpecialistTask);
 
-        return specialistTask;
+        return learnSpecialistTask;
     }
 
     public LearnPrimaryTask finishPrimaryTask(int id, EFSPrimaryTask primaryTask) {
@@ -104,8 +104,9 @@ public class LearnService {
         if (optionalLearnPrimaryTask.isPresent()) {
             LearnPrimaryTask learnPrimaryTask = optionalLearnPrimaryTask.get();
 
-            if (learnPrimaryTask.getUser().equals(user)) {
+            if (learnPrimaryTask.getUser().getId().equals(user.getId())) {
                 learnPrimaryTask.setCorrect(learnPrimaryTask.getPrimaryTask().isCorrectAnswer() == primaryTask.isChosenAnswer());
+                learnPrimaryTask.setSelectedAnswer(String.valueOf(primaryTask.isChosenAnswer()));
                 learnPrimaryTaskRepository.save(learnPrimaryTask);
                 return learnPrimaryTask;
             }
@@ -122,8 +123,9 @@ public class LearnService {
         if (optionalLearnSpecialistTask.isPresent()) {
             LearnSpecialistTask learnSpecialistTask = optionalLearnSpecialistTask.get();
 
-            if (learnSpecialistTask.getUser().equals(user)) {
+            if (learnSpecialistTask.getUser().getId().equals(user.getId())) {
                 learnSpecialistTask.setCorrect(learnSpecialistTask.getSpecialistTask().getCorrectAnswer().equals(specialistTask.getChosenAnswer()));
+                learnSpecialistTask.setSelectedAnswer(specialistTask.getChosenAnswer());
                 learnSpecialistTaskRepository.save(learnSpecialistTask);
                 return learnSpecialistTask;
             }

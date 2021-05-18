@@ -26,4 +26,6 @@ public class LearnPrimaryTask {
 
     @OneToOne
     User user;
+
+    String selectedAnswer;
 }

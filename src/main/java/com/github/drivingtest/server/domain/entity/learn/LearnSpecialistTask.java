@@ -26,4 +26,6 @@ public class LearnSpecialistTask {
 
     @OneToOne
     User user;
+
+    String selectedAnswer;
 }

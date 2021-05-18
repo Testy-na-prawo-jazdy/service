@@ -3,8 +3,6 @@ package com.github.drivingtest.server.web.rest;
 import com.github.drivingtest.server.domain.dto.form.request.EFSPrimaryTask;
 import com.github.drivingtest.server.domain.dto.form.request.EFSSpecialistTask;
 import com.github.drivingtest.server.domain.entity.CategoryEnum;
-import com.github.drivingtest.server.domain.entity.PrimaryTask;
-import com.github.drivingtest.server.domain.entity.SpecialistTask;
 import com.github.drivingtest.server.domain.entity.learn.LearnPrimaryTask;
 import com.github.drivingtest.server.domain.entity.learn.LearnSpecialistTask;
 import com.github.drivingtest.server.service.LearnService;
@@ -30,7 +28,7 @@ public class LearnController {
     }
 
     @PostMapping(PATH_POST_LEARN_PRIMARY_TASK_START)
-    ResponseEntity<PrimaryTask> startLearnPrimaryTask(@PathVariable String category) {
+    ResponseEntity<LearnPrimaryTask> startLearnPrimaryTask(@PathVariable String category) {
         return new ResponseEntity<>(learnService.getUniquePrimaryTask(CategoryEnum.valueOf(category)), HttpStatus.OK);
     }
 
@@ -40,7 +38,7 @@ public class LearnController {
     }
 
     @PostMapping(PATH_POST_LEARN_SPECIALIST_TASK_START)
-    ResponseEntity<SpecialistTask> startLearnSpecialistTask(@PathVariable String category) {
+    ResponseEntity<LearnSpecialistTask> startLearnSpecialistTask(@PathVariable String category) {
         return new ResponseEntity<>(learnService.getUniqueSpecialistTask(CategoryEnum.valueOf(category)), HttpStatus.OK);
     }
 
