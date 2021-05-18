@@ -108,7 +108,7 @@ public class AuthServiceImpl implements AuthService {
     public void changePassword(ChangePasswordRequest changePasswordRequest) {
         User user = getLoggedUser();
 
-        if(passwordEncoder.matches(changePasswordRequest.getOldPassword(), user.getPassword())) {
+        if (passwordEncoder.matches(changePasswordRequest.getOldPassword(), user.getPassword())) {
             user.setPassword(passwordEncoder.encode(changePasswordRequest.getNewPassword()));
             userService.save(user);
         } else {
@@ -120,7 +120,7 @@ public class AuthServiceImpl implements AuthService {
     public void changeEmail(ChangeEmailRequest changeEmailRequest) {
         User user = getLoggedUser();
 
-        if(passwordEncoder.matches(changeEmailRequest.getPassword(), user.getPassword())) {
+        if (passwordEncoder.matches(changeEmailRequest.getPassword(), user.getPassword())) {
             user.setEmail(passwordEncoder.encode(changeEmailRequest.getNewEmail()));
             userService.save(user);
         } else {

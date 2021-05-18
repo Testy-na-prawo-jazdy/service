@@ -2,7 +2,7 @@ package com.github.drivingtest.server.domain.mapper;
 
 import com.github.drivingtest.server.domain.dto.form.response.ExamForm;
 import com.github.drivingtest.server.domain.dto.form.response.ExamResult;
-import com.github.drivingtest.server.domain.dto.history.response.ExamHistory;
+import com.github.drivingtest.server.domain.dto.history.ExamHistoryResponse;
 import com.github.drivingtest.server.domain.entity.exam.Exam;
 import org.springframework.stereotype.Component;
 
@@ -24,8 +24,8 @@ public class ExamMapper {
                 .build();
     }
 
-    public ExamHistory examToExamHistory(Exam exam) {
-        return ExamHistory.builder()
+    public ExamHistoryResponse examToExamHistory(Exam exam) {
+        return ExamHistoryResponse.builder()
                 .examId(exam.getId())
                 .category(exam.getCategory())
                 .date(exam.getDate())

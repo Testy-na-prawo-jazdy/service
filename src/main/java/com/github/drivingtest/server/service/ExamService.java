@@ -3,7 +3,7 @@ package com.github.drivingtest.server.service;
 import com.github.drivingtest.server.domain.dto.form.request.ExamFormSubmit;
 import com.github.drivingtest.server.domain.dto.form.response.ExamForm;
 import com.github.drivingtest.server.domain.dto.form.response.ExamResult;
-import com.github.drivingtest.server.domain.dto.history.response.ExamHistory;
+import com.github.drivingtest.server.domain.dto.history.ExamHistoryResponse;
 import com.github.drivingtest.server.domain.entity.CategoryEnum;
 import com.github.drivingtest.server.domain.entity.PrimaryTask;
 import com.github.drivingtest.server.domain.entity.SpecialistTask;
@@ -137,7 +137,7 @@ public class ExamService {
         return countPT + countST;
     }
 
-    public List<ExamHistory> getHistory() {
+    public List<ExamHistoryResponse> getHistory() {
         return examRepository.findAllByUser(authService.getLoggedUser()).stream().map(examMapper::examToExamHistory).collect(Collectors.toList());
     }
 
