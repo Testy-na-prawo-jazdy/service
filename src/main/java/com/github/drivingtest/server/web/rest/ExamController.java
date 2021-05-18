@@ -3,7 +3,7 @@ package com.github.drivingtest.server.web.rest;
 import com.github.drivingtest.server.domain.dto.form.request.ExamFormSubmit;
 import com.github.drivingtest.server.domain.dto.form.response.ExamForm;
 import com.github.drivingtest.server.domain.dto.form.response.ExamResult;
-import com.github.drivingtest.server.domain.dto.history.response.ExamHistory;
+import com.github.drivingtest.server.domain.dto.history.ExamHistoryResponse;
 import com.github.drivingtest.server.domain.entity.CategoryEnum;
 import com.github.drivingtest.server.service.ExamService;
 import org.springframework.http.HttpStatus;
@@ -42,7 +42,7 @@ public class ExamController {
     }
 
     @GetMapping(PATH_GET_HISTORY_EXAM)
-    public ResponseEntity<List<ExamHistory>> examHistory() {
+    public ResponseEntity<List<ExamHistoryResponse>> examHistory() {
         return new ResponseEntity<>(examService.getHistory(), HttpStatus.OK);
     }
 }

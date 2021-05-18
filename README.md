@@ -7,7 +7,7 @@
 - [X] Spring Security with JWT authentication
 - [X] Logic related to generating exams
 - [X] Learning mode
-- [ ] Statistics
+- [X] Statistics
 - [X] History
 - [ ] Documentation
 - [X] Deployment to Heroku
@@ -184,6 +184,7 @@ Response
 ```
 
 #### Tryb nauki - generowanie pojedynczych pytań
+
 ```
 POST /learn/primaryTask/start/{category}
 POST /learn/specialistTask/start/{category}
@@ -266,7 +267,8 @@ Response 2
 }
 ```
 
-#### Tryb nauki - wysyłanie rozwiązania 
+#### Tryb nauki - wysyłanie rozwiązania
+
 ```
 POST /learn/primaryTask/finish/{id}
 POST /learn/specialistTask/finish/{id}
@@ -362,6 +364,7 @@ Response 2
 ```
 
 #### Historia egzaminów
+
 ```
 GET /exam/history
 
@@ -377,6 +380,7 @@ Response
 ```
 
 #### Wynik egzaminu
+
 ```
 GET /exam/result/{id}
 
@@ -463,7 +467,30 @@ Response
 }
 ```
 
+#### Statystyki z ostatniego miesiąca
+
+```
+GET /exam/statistics
+
+Response
+[
+    {
+        "date": "2021-05-21T00:00:00.000+00:00",
+        "averageScore": 0,
+        "failedTests": 1,
+        "allTests": 1
+    },
+    {
+        "date": "2021-05-18T00:00:00.000+00:00",
+        "averageScore": 1,
+        "failedTests": 2,
+        "allTests": 2
+    }
+]
+```
+
 ### Dla niezalogowanych
+
 ```
 POST /auth/login
 
@@ -479,7 +506,6 @@ Response
     "refreshToken": "FCglofZA0u6PxqZ29mqiQUvjOslNSVZCnPAqrS1Scg76DWuSSPNyZh412LU8bcUe8dx2OuZpQXMhIM0Q3uhNbnWHVKApeej64YvOP32BZumgI6E9Pt2zqaGrPYL30sUu"
 }
 ```
-
 
 #### Logowanie
 
