@@ -7,7 +7,7 @@
 - [X] Spring Security with JWT authentication
 - [X] Logic related to generating exams
 - [X] Learning mode
-- [ ] Statistics
+- [X] Statistics
 - [X] History
 - [ ] Documentation
 - [X] Deployment to Heroku
