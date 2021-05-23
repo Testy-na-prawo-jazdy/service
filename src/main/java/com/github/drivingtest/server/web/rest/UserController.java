@@ -19,7 +19,7 @@ public class UserController {
     public static final String PATH_POST_SIGN_UP = "/auth/register";
     public static final String PATH_POST_CHANGE_PASSWORD = "/auth/changePassword";
     public static final String PATH_POST_CHANGE_EMAIL = "/auth/changeEmail";
-    public static final String PATH_POST_VERIFY_EMAIL = "/auth/verifyEmail/{token}";
+    public static final String PATH_POST_VERIFY_EMAIL = "/auth/verifyEmail/{verificationToken}";
 
     private final AuthService authService;
 
@@ -46,8 +46,8 @@ public class UserController {
     }
 
     @PostMapping(PATH_POST_VERIFY_EMAIL)
-    public ResponseEntity<Void> userPostVerifyEmail(@PathVariable String token) {
-        authService.verifyEmail(token);
+    public ResponseEntity<Void> userPostVerifyEmail(@PathVariable String verificationToken) {
+        authService.verifyEmail(verificationToken);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

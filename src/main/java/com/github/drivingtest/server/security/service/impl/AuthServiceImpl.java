@@ -137,19 +137,24 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public void createVerificationToken(User user, String token) {
         VerificationToken myToken = new VerificationToken(token, user);
-        System.out.println(token);
         verificationTokenRepository.save(myToken);
     }
 
     @Override
-    public VerificationToken getVerificationToken(String VerificationToken) {
-        return verificationTokenRepository.findByToken(VerificationToken);
+    public VerificationToken getVerificationToken(String verificationToken) {
+        return verificationTokenRepository.findByToken(verificationToken);
     }
 
     @Override
     public void verifyEmail(String token) {
         VerificationToken verificationToken = getVerificationToken(token);
-        if (verificationToken.getToken().equals(token)) verificationToken.getUser().setEnabled(true);
+        if (verificationToken.getToken().equals(token)) activateUser(verificationToken.getUser());
         verificationTokenRepository.save(verificationToken);
+    }
+
+    @Override
+    public void activateUser(User user) {
+        user.setEnabled(true);
+        userService.save(user);
     }
 }

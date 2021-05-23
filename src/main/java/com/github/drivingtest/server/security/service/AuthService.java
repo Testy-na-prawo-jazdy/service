@@ -29,7 +29,9 @@ public interface AuthService {
 
     void createVerificationToken(User user, String token);
 
-    VerificationToken getVerificationToken(String VerificationToken);
+    VerificationToken getVerificationToken(String verificationToken);
 
-    void verifyEmail(String token);
+    void verifyEmail(String verificationToken);
+
+    void activateUser(User user);
 }
