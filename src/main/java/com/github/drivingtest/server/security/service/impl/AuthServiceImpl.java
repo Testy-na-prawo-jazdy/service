@@ -10,11 +10,13 @@ import com.github.drivingtest.server.security.domain.dto.response.TokenResponse;
 import com.github.drivingtest.server.security.domain.dto.response.UserResponse;
 import com.github.drivingtest.server.security.domain.entity.User;
 import com.github.drivingtest.server.security.domain.entity.UserRefreshToken;
+import com.github.drivingtest.server.security.domain.entity.VerificationToken;
 import com.github.drivingtest.server.security.exception.UserAlreadyExistsException;
 import com.github.drivingtest.server.security.exception.UserNotFoundException;
 import com.github.drivingtest.server.security.exception.WrongPasswordException;
 import com.github.drivingtest.server.security.mapper.UserMapper;
 import com.github.drivingtest.server.security.repository.UserRefreshTokenRepository;
+import com.github.drivingtest.server.security.repository.VerificationTokenRepository;
 import com.github.drivingtest.server.security.service.AuthService;
 import com.github.drivingtest.server.security.service.UserRoleService;
 import com.github.drivingtest.server.security.service.UserService;
@@ -25,6 +27,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -32,13 +35,15 @@ public class AuthServiceImpl implements AuthService {
     private final UserService userService;
     private final UserRoleService userRoleService;
     private final UserRefreshTokenRepository userRefreshTokenRepository;
+    private final VerificationTokenRepository verificationTokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
 
-    public AuthServiceImpl(UserService userService, UserRoleService userRoleService, UserRefreshTokenRepository userRefreshTokenRepository, PasswordEncoder passwordEncoder, JwtProvider jwtProvider) {
+    public AuthServiceImpl(UserService userService, UserRoleService userRoleService, UserRefreshTokenRepository userRefreshTokenRepository, VerificationTokenRepository verificationTokenRepository, PasswordEncoder passwordEncoder, JwtProvider jwtProvider) {
         this.userService = userService;
         this.userRoleService = userRoleService;
         this.userRefreshTokenRepository = userRefreshTokenRepository;
+        this.verificationTokenRepository = verificationTokenRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtProvider = jwtProvider;
     }
@@ -83,6 +88,7 @@ public class AuthServiceImpl implements AuthService {
         user.setRoles(Collections.singletonList(userRoleService.getRoleUser()));
 
         User persistedUser = userService.save(user);
+        createVerificationToken(persistedUser, UUID.randomUUID().toString());
 
         return UserMapper.userToResponse(persistedUser);
     }
@@ -126,5 +132,24 @@ public class AuthServiceImpl implements AuthService {
         } else {
             throw new WrongPasswordException();
         }
+    }
+
+    @Override
+    public void createVerificationToken(User user, String token) {
+        VerificationToken myToken = new VerificationToken(token, user);
+        System.out.println(token);
+        verificationTokenRepository.save(myToken);
+    }
+
+    @Override
+    public VerificationToken getVerificationToken(String VerificationToken) {
+        return verificationTokenRepository.findByToken(VerificationToken);
+    }
+
+    @Override
+    public void verifyEmail(String token) {
+        VerificationToken verificationToken = getVerificationToken(token);
+        if (verificationToken.getToken().equals(token)) verificationToken.getUser().setEnabled(true);
+        verificationTokenRepository.save(verificationToken);
     }
 }
