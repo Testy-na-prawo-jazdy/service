@@ -36,6 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.addFilterAfter(jwtFilter, BasicAuthenticationFilter.class);
         http.authorizeRequests()
                 .mvcMatchers(UserController.PATH_POST_SIGN_UP).permitAll()
+                .mvcMatchers(UserController.PATH_POST_VERIFY_EMAIL).permitAll()
                 .mvcMatchers(AuthController.PATH_POST_REFRESH_TOKEN).permitAll()
                 .mvcMatchers(AuthController.PATH_POST_LOGIN).permitAll()
                 .mvcMatchers("/h2-console/**").permitAll() // DEV

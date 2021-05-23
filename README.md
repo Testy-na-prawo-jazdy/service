@@ -547,6 +547,15 @@ Response
 }
 ```
 
+#### Weryfikacja adresu email
+
+```
+POST /auth/verifyEmail/{verificationToken}
+
+Response
+200 - OK
+```
+
 #### Odświeżanie tokena
 
 ```

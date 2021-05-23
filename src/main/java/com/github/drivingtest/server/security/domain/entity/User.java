@@ -30,6 +30,9 @@ public class User implements UserDetails {
     @JoinTable(name = "USER_ROLE", joinColumns = {@JoinColumn(name = "USER_ID")}, inverseJoinColumns = {@JoinColumn(name = "ROLE_ID")})
     private List<Role> roles;
 
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled = false;
+
     public User() {
     }
 
@@ -102,6 +105,10 @@ public class User implements UserDetails {
         this.username = username;
     }
 
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -119,7 +126,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 
 }

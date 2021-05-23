@@ -8,6 +8,7 @@ import com.github.drivingtest.server.security.domain.dto.response.LoginResponse;
 import com.github.drivingtest.server.security.domain.dto.response.TokenResponse;
 import com.github.drivingtest.server.security.domain.dto.response.UserResponse;
 import com.github.drivingtest.server.security.domain.entity.User;
+import com.github.drivingtest.server.security.domain.entity.VerificationToken;
 
 import java.util.Optional;
 
@@ -25,4 +26,12 @@ public interface AuthService {
     void changePassword(ChangePasswordRequest changePasswordRequest);
 
     void changeEmail(ChangeEmailRequest changeEmailRequest);
+
+    VerificationToken createVerificationToken(User user, String token);
+
+    VerificationToken getVerificationToken(String verificationToken);
+
+    void verifyEmail(String verificationToken);
+
+    void activateUser(User user);
 }

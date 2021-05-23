@@ -11,13 +11,16 @@ import com.github.drivingtest.server.parser.CsvReader;
 import com.github.drivingtest.server.parser.TaskPrimary;
 import com.github.drivingtest.server.parser.TaskSpecialist;
 import com.github.drivingtest.server.security.domain.dto.request.RegisterRequest;
+import com.github.drivingtest.server.security.domain.entity.User;
 import com.github.drivingtest.server.security.service.AuthService;
+import com.github.drivingtest.server.security.service.UserService;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -27,13 +30,15 @@ public class DataLoader implements ApplicationRunner {
     private final CategoryRepository categoryRepository;
     private final PrimaryTaskRepository primaryTaskRepository;
     private final SpecialistTaskRepository specialistTaskRepository;
+    private final UserService userService;
     private final AuthService authService;
 
-    public DataLoader(CsvReader csvReader, CategoryRepository categoryRepository, PrimaryTaskRepository primaryTaskRepository, SpecialistTaskRepository specialistTaskRepository, AuthService authService) {
+    public DataLoader(CsvReader csvReader, CategoryRepository categoryRepository, PrimaryTaskRepository primaryTaskRepository, SpecialistTaskRepository specialistTaskRepository, UserService userService, AuthService authService) {
         this.csvReader = csvReader;
         this.categoryRepository = categoryRepository;
         this.primaryTaskRepository = primaryTaskRepository;
         this.specialistTaskRepository = specialistTaskRepository;
+        this.userService = userService;
         this.authService = authService;
     }
 
@@ -98,5 +103,11 @@ public class DataLoader implements ApplicationRunner {
         registerRequest.setEmail("DEMO@LOCALHOST.COM");
         registerRequest.setPassword("DEMO123");
         authService.register(registerRequest);
+
+        Optional<User> optionalUser = userService.findByUsername("DEMO");
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            authService.activateUser(user);
+        }
     }
 }
