@@ -27,7 +27,7 @@ public interface AuthService {
 
     void changeEmail(ChangeEmailRequest changeEmailRequest);
 
-    void createVerificationToken(User user, String token);
+    VerificationToken createVerificationToken(User user, String token);
 
     VerificationToken getVerificationToken(String verificationToken);
 

@@ -12,7 +12,6 @@ import com.github.drivingtest.server.parser.TaskPrimary;
 import com.github.drivingtest.server.parser.TaskSpecialist;
 import com.github.drivingtest.server.security.domain.dto.request.RegisterRequest;
 import com.github.drivingtest.server.security.domain.entity.User;
-import com.github.drivingtest.server.security.repository.UserRepository;
 import com.github.drivingtest.server.security.service.AuthService;
 import com.github.drivingtest.server.security.service.UserService;
 import org.springframework.boot.ApplicationArguments;
@@ -106,7 +105,7 @@ public class DataLoader implements ApplicationRunner {
         authService.register(registerRequest);
 
         Optional<User> optionalUser = userService.findByUsername("DEMO");
-        if(optionalUser.isPresent()) {
+        if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             authService.activateUser(user);
         }

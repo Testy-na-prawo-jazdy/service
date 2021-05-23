@@ -20,11 +20,13 @@ import com.github.drivingtest.server.security.repository.VerificationTokenReposi
 import com.github.drivingtest.server.security.service.AuthService;
 import com.github.drivingtest.server.security.service.UserRoleService;
 import com.github.drivingtest.server.security.service.UserService;
+import com.github.drivingtest.server.security.utils.EmailSender;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.net.InetAddress;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
@@ -38,14 +40,16 @@ public class AuthServiceImpl implements AuthService {
     private final VerificationTokenRepository verificationTokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
+    private final EmailSender emailSender;
 
-    public AuthServiceImpl(UserService userService, UserRoleService userRoleService, UserRefreshTokenRepository userRefreshTokenRepository, VerificationTokenRepository verificationTokenRepository, PasswordEncoder passwordEncoder, JwtProvider jwtProvider) {
+    public AuthServiceImpl(UserService userService, UserRoleService userRoleService, UserRefreshTokenRepository userRefreshTokenRepository, VerificationTokenRepository verificationTokenRepository, PasswordEncoder passwordEncoder, JwtProvider jwtProvider, EmailSender emailSender) {
         this.userService = userService;
         this.userRoleService = userRoleService;
         this.userRefreshTokenRepository = userRefreshTokenRepository;
         this.verificationTokenRepository = verificationTokenRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtProvider = jwtProvider;
+        this.emailSender = emailSender;
     }
 
     private LoginResponse doLogin(User user) {
@@ -88,9 +92,17 @@ public class AuthServiceImpl implements AuthService {
         user.setRoles(Collections.singletonList(userRoleService.getRoleUser()));
 
         User persistedUser = userService.save(user);
-        createVerificationToken(persistedUser, UUID.randomUUID().toString());
+        VerificationToken verificationToken = createVerificationToken(persistedUser, UUID.randomUUID().toString());
+        sendVerificationEmail(verificationToken);
 
         return UserMapper.userToResponse(persistedUser);
+    }
+
+    private void sendVerificationEmail(VerificationToken verificationToken) {
+        String email = verificationToken.getUser().getEmail();
+        String token = verificationToken.getToken();
+        String message = InetAddress.getLoopbackAddress().getHostAddress() + "/auth/verifyEmail/" + token;
+        emailSender.sendMail(email, "Please verify your email", message, false);
     }
 
     @Override
@@ -135,9 +147,9 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public void createVerificationToken(User user, String token) {
+    public VerificationToken createVerificationToken(User user, String token) {
         VerificationToken myToken = new VerificationToken(token, user);
-        verificationTokenRepository.save(myToken);
+        return verificationTokenRepository.save(myToken);
     }
 
     @Override
