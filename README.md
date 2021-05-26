@@ -586,6 +586,38 @@ Response
 204 - NO CONTENT
 ```
 
+#### Zmiana hasła
+
+```
+POST /auth/changePassword
+
+Request
+{
+    "oldPassword": "DEMO123",
+    "newPassword": "DEMO123456"
+}
+
+Response
+200 - OK
+403 - FORBIDDEN
+```
+
+#### Zmiana email
+
+```
+POST /auth/changeEmail
+
+Request
+{
+    "password": "DEMO123",
+    "newEmail": "admin@localhost"
+}
+
+Response
+200 - OK
+403 - FORBIDDEN
+```
+
 #### Whoami [do debugowania]
 
 ```
@@ -612,38 +644,6 @@ Response
     "credentialsNonExpired": true,
     "accountNonLocked": true
 }
-```
-
-#### Zmiana hasła
-
-```
-GET /auth/changePassword
-
-Request
-{
-    "oldPassword": "DEMO123",
-    "newPassword": "DEMO123456"
-}
-
-Response
-200 - OK
-403 - FORBIDDEN
-```
-
-#### Zmiana email
-
-```
-GET /auth/changeEmail
-
-Request
-{
-    "password": "DEMO123",
-    "newEmail": "admin@localhost"
-}
-
-Response
-200 - OK
-403 - FORBIDDEN
 ```
 
 ### Przykładowa obsługa błędów
