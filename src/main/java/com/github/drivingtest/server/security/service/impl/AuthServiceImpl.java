@@ -101,8 +101,16 @@ public class AuthServiceImpl implements AuthService {
     private void sendVerificationEmail(VerificationToken verificationToken) {
         String email = verificationToken.getUser().getEmail();
         String token = verificationToken.getToken();
-        String message = InetAddress.getLoopbackAddress().getHostAddress() + "/auth/verifyEmail/" + token;
-        emailSender.sendMail(email, "Please verify your email", message, false);
+        String topic = "Please verify your email";
+        String message = "Link to activate the account: " + InetAddress.getLoopbackAddress().getHostAddress() + "/auth/verifyEmail/" + token;
+        emailSender.sendMail(email, topic, message, false);
+    }
+
+    private void sendPasswordChangedEmail(User user) {
+        String email = user.getEmail();
+        String topic = "New changes to your account";
+        String message = "Your password has been changed";
+        emailSender.sendMail(email, topic, message, false);
     }
 
     @Override
@@ -129,6 +137,7 @@ public class AuthServiceImpl implements AuthService {
         if (passwordEncoder.matches(changePasswordRequest.getOldPassword(), user.getPassword())) {
             user.setPassword(passwordEncoder.encode(changePasswordRequest.getNewPassword()));
             userService.save(user);
+            sendPasswordChangedEmail(user);
         } else {
             throw new WrongPasswordException();
         }
