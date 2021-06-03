@@ -22,17 +22,20 @@ import com.github.drivingtest.server.security.service.UserRoleService;
 import com.github.drivingtest.server.security.service.UserService;
 import com.github.drivingtest.server.security.utils.EmailSender;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.net.InetAddress;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class AuthServiceImpl implements AuthService {
+
+    @Value("${app.url}")
+    private String APP_URL;
 
     private final UserService userService;
     private final UserRoleService userRoleService;
@@ -102,7 +105,8 @@ public class AuthServiceImpl implements AuthService {
         String email = verificationToken.getUser().getEmail();
         String token = verificationToken.getToken();
         String topic = "Please verify your email";
-        String message = "Link to activate the account: " + InetAddress.getLoopbackAddress().getHostAddress() + "/auth/verifyEmail/" + token;
+        String url = APP_URL + "/auth/verifyEmail/";
+        String message = "Link to activate the account: " + url + token;
         emailSender.sendMail(email, topic, message, false);
     }
 

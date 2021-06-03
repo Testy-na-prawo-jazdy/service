@@ -44,10 +44,12 @@ public class DataLoader implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        createCategories();
-        createPrimaryTasks();
-        createSpecialistTasks();
-        createDemoAccount();
+        if(!userService.findByUsername("DEMO").isPresent()) {
+            createCategories();
+            createPrimaryTasks();
+            createSpecialistTasks();
+            createDemoAccount();
+        }
     }
 
     private void createCategories() {

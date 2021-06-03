@@ -7,10 +7,7 @@ import com.github.drivingtest.server.security.domain.dto.response.UserResponse;
 import com.github.drivingtest.server.security.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -45,9 +42,9 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping(PATH_POST_VERIFY_EMAIL)
-    public ResponseEntity<Void> userPostVerifyEmail(@PathVariable String verificationToken) {
+    @GetMapping(PATH_POST_VERIFY_EMAIL)
+    public ResponseEntity<String> userPostVerifyEmail(@PathVariable String verificationToken) {
         authService.verifyEmail(verificationToken);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("Verification successful", HttpStatus.OK);
     }
 }
