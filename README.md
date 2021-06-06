@@ -1,4 +1,5 @@
 # Testy na prawo jazdy
+Backend do aplikacji z testami na prawo jazdy
 
 ### Objectives
 
@@ -11,10 +12,20 @@
 - [X] History
 - [X] Documentation
 - [X] Deployment to Heroku
-- [ ] Mobile application
-- [ ] Testing
+- [X] Mobile application
+- [X] Testing
 
-### Demo account
+### Mobile application (Android / iOS)
+[Testy na prawo jazdy App](https://github.com/Testy-na-prawo-jazdy/app)
+
+### Contributions
+[Mateusz Janczak](https://github.com/mateuszjanczak) |
+[Przemysław Kuca](https://github.com/EvilDamage) |
+[Mateusz Mądel](https://github.com/mateuszmadel)
+
+### Endpointy
+
+#### Demo account
 
 ```
 POST /auth/login
@@ -31,8 +42,6 @@ Response
     "refreshToken": "IE25dzAOkPoOKRJf7CWA38tdf3FkkzTUdSgcHIA3ynkx8OHN4vtCNng3shVNb11xMab2au2fZXnHxQykMAmThB3pxTsJY0qDW4JqZNWn0SHaBYjOa3latxdHQZTWvjDd"
 }
 ```
-
-### Endpointy
 
 ### Dla zalogowanych
 
